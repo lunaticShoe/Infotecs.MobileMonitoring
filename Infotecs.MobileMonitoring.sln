@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infotecs.MobileMonitoring", "Infotecs.MobileMonitoring\Infotecs.MobileMonitoring.csproj", "{F3D2B7F6-D87C-46EE-909F-14FE0F676EEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3D2B7F6-D87C-46EE-909F-14FE0F676EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D2B7F6-D87C-46EE-909F-14FE0F676EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D2B7F6-D87C-46EE-909F-14FE0F676EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D2B7F6-D87C-46EE-909F-14FE0F676EEA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

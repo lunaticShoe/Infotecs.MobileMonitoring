@@ -12,9 +12,9 @@
     "Infotecs.MobileMonitoring": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7136;http://localhost:5136",
+      "applicationUrl": "http://localhost:5136",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

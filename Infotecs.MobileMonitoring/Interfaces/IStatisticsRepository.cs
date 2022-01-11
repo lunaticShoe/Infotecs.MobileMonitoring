@@ -18,4 +18,6 @@ public interface IStatisticsRepository
     /// <param name="token"></param>
     /// <returns></returns>
     Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default);
+
+    Task<StatisticsModel?> Get(Guid id, CancellationToken token = default);
 }

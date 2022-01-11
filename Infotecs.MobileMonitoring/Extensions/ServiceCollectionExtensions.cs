@@ -10,7 +10,6 @@ public static class ServiceCollectionExtensions
     {
         Log.Logger = configuration
             .MinimumLevel.Debug()
-            .WriteTo.Console()
             .WriteTo
             .File(
                 path: AppDomain.CurrentDomain.BaseDirectory + "/logs/log-.txt",

@@ -9,7 +9,7 @@ public interface IStatisticsRepository
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task<IEnumerable<StatisticsModel>> GetListAsync(CancellationToken token = default);
+    Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default);
 
     /// <summary>
     /// Добавить элемент статистики в хранилище
@@ -19,5 +19,5 @@ public interface IStatisticsRepository
     /// <returns></returns>
     Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default);
 
-    Task<StatisticsModel?> Get(Guid id, CancellationToken token = default);
+    Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default);
 }

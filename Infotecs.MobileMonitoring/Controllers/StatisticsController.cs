@@ -13,23 +13,23 @@ namespace Infotecs.MobileMonitoring.Controllers
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        private readonly IStatisticsService _statisticsService;
+        private readonly IStatisticsService statisticsService;
 
         public StatisticsController(IStatisticsService statisticsService)
         {
-            _statisticsService = statisticsService;
+            this.statisticsService = statisticsService;
         }
 
         [HttpGet("list")]
-        public Task<IEnumerable<StatisticsModel>> GetList(CancellationToken cancellationToken)
+        public Task<ICollection<StatisticsModel>> GetList(CancellationToken cancellationToken)
         {
-            return _statisticsService.GetListAsync(cancellationToken);
+            return statisticsService.GetListAsync(cancellationToken);
         }
         [HttpPut("create")]
         public async Task<IActionResult> Create(StatisticsModel statisticsModel, CancellationToken cancellationToken)
         {
             statisticsModel.CreatedAt = DateTime.Now;
-            await _statisticsService.CreateAsync(statisticsModel, cancellationToken);
+            await statisticsService.CreateAsync(statisticsModel, cancellationToken);
             return NoContent();
         }
     }

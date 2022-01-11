@@ -29,6 +29,20 @@ public class StatisticsService : IStatisticsService
             throw new Exception($"Element with id = {statisticsModel.Id} already exists");
         
         await statisticsRepository.CreateAsync(statisticsModel, token);
-        logger.Debug("Element with id = {statistics} added",statisticsModel);
+        logger.Debug("Element added: {@Statistics}",statisticsModel);
     }
+
+    public async Task UpdateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
+    {
+        var existingItem = await statisticsRepository.GetAsync(statisticsModel.Id, token);
+
+        if (existingItem is null)
+            throw new Exception($"Element with id = {statisticsModel.Id} does not exists");
+        await statisticsRepository.UpdateAsync(existingItem, statisticsModel, token);
+        logger.Debug(
+            "Element altered from {@StatisticsOld}, to {@StatisticsNew}", 
+            existingItem,statisticsModel);
+      
+        
+    } 
 }

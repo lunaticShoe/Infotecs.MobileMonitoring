@@ -30,6 +30,12 @@ public class StatisticsRepository : IStatisticsRepository
         statisticsModels.TryAdd(statisticsModel.Id,statisticsModel);
         return Task.CompletedTask;
     }
+    public Task UpdateAsync(StatisticsModel oldModel, StatisticsModel newModel, CancellationToken token = default)
+    {
+        token.ThrowIfCancellationRequested();
+        statisticsModels.TryUpdate(oldModel.Id, newModel, oldModel);
+        return Task.CompletedTask;
+    }
     
     public Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default)
     {

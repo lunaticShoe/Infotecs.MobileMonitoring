@@ -32,5 +32,12 @@ namespace Infotecs.MobileMonitoring.Controllers
             await statisticsService.CreateAsync(statisticsModel, cancellationToken);
             return NoContent();
         }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update(StatisticsModel statisticsModel, CancellationToken cancellationToken)
+        {
+            await statisticsService.UpdateAsync(statisticsModel,cancellationToken);
+            return NoContent();
+        }
     }
 }

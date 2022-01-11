@@ -1,122 +1,248 @@
 [
   {
-    "id": "bc6b14f9-fd95-45c6-b0e5-bf2d4fe37449",
-    "name": "Campos Henson InfoTeCS Bowmansville",
-    "clientVersion": "0.7.7.9040",
-    "deviceType": 0
+    "id": "d16f805b-6c6e-4397-a8e2-519278c52356",
+    "userName": "Richards Baxter",
+    "clientVersion": "3.3.2.35640",
+    "osName": "Windows"
   },
   {
-    "id": "3aaea9c0-8c40-4caa-9ba5-5023cc5b67af",
-    "name": "Blanchard Cobb InfoTeCS Keller",
-    "clientVersion": "2.14.5.21731",
-    "deviceType": 1
+    "id": "7402b8cf-8dca-4ee0-9b9f-cf90b97c654d",
+    "userName": "Hayes Ida",
+    "clientVersion": "2.12.7.48950",
+    "osName": "Android"
   },
   {
-    "id": "de06c298-eac5-4706-9af1-a616fabf5bd2",
-    "name": "Leach Tanya InfoTeCS Rosewood",
-    "clientVersion": "3.15.10.16632",
-    "deviceType": 0
+    "id": "a89b8178-2600-4e78-b520-78d760522832",
+    "userName": "Santiago Valentine",
+    "clientVersion": "0.10.1.22522",
+    "osName": "iOS"
   },
   {
-    "id": "2094ab74-b224-4f45-9cd1-3145a0c94e22",
-    "name": "Chase Paula InfoTeCS Broadlands",
-    "clientVersion": "4.16.2.7271",
-    "deviceType": 0
+    "id": "849e2495-af65-46f8-abe8-2a5902395f69",
+    "userName": "Michael Kristy",
+    "clientVersion": "1.12.5.9798",
+    "osName": "Unknown"
   },
   {
-    "id": "a8c386e3-3566-446b-b577-12cf54fda2a6",
-    "name": "Boyle Ewing InfoTeCS Eastmont",
-    "clientVersion": "5.11.6.3135",
-    "deviceType": 1
+    "id": "e415e493-781f-4d82-a65a-0f28ad9b5a1c",
+    "userName": "Snyder Jacklyn",
+    "clientVersion": "1.5.3.20134",
+    "osName": "iOS"
   },
   {
-    "id": "83bb2eef-3b56-48e1-b46f-75b1b8715f86",
-    "name": "Ferguson Pauline InfoTeCS Sehili",
-    "clientVersion": "4.11.3.19897",
-    "deviceType": 0
+    "id": "ef1f4386-3b47-4ec5-9470-f2f0768f9857",
+    "userName": "Carrillo Wilda",
+    "clientVersion": "2.3.6.9498",
+    "osName": "MacOS"
   },
   {
-    "id": "539f4cfc-895c-45cc-b028-7ab5d92af8ca",
-    "name": "Willis Irene InfoTeCS Knowlton",
-    "clientVersion": "4.13.7.6772",
-    "deviceType": 1
+    "id": "9b49c41e-5e38-43e0-9789-6d87dd0bf4de",
+    "userName": "Glenn Zimmerman",
+    "clientVersion": "3.14.2.43534",
+    "osName": "Unknown"
   },
   {
-    "id": "2b43eda4-c75a-434f-8195-07d05c1d06ec",
-    "name": "Mcgowan Lacy InfoTeCS Muir",
-    "clientVersion": "3.16.10.15482",
-    "deviceType": 1
+    "id": "3cee9c0d-e596-425d-9e9e-f93489c2999b",
+    "userName": "Hood Staci",
+    "clientVersion": "5.8.5.22706",
+    "osName": "Linux"
   },
   {
-    "id": "798cc7c5-6327-4e8a-8749-a98fc1e54426",
-    "name": "Mccall Robert InfoTeCS Fresno",
-    "clientVersion": "1.7.3.23518",
-    "deviceType": 1
+    "id": "22f0634e-ebd9-4872-81f1-dce6ae8558b2",
+    "userName": "Holt Cindy",
+    "clientVersion": "0.10.6.30156",
+    "osName": "Unknown"
   },
   {
-    "id": "d8c2e3a3-82d5-4051-84c5-ac63024cbabb",
-    "name": "Howard Oneal InfoTeCS Dowling",
-    "clientVersion": "5.15.5.37868",
-    "deviceType": 1
+    "id": "eb656b1e-10b2-4aa4-a600-79f2cb7971be",
+    "userName": "Alvarado Rhodes",
+    "clientVersion": "5.3.9.30519",
+    "osName": "Unknown"
   },
   {
-    "id": "f7547823-12d0-45f6-926a-23cf2b2d1df6",
-    "name": "Brooks Harper InfoTeCS Chamberino",
-    "clientVersion": "5.7.6.49656",
-    "deviceType": 1
+    "id": "dd49e849-1ffe-4bc7-bb91-6b8d1c738461",
+    "userName": "Hatfield Katie",
+    "clientVersion": "5.9.4.10647",
+    "osName": "Android"
   },
   {
-    "id": "28e45878-02e6-41c7-858e-014d86c8a09f",
-    "name": "Ayala Hyde InfoTeCS Lithium",
-    "clientVersion": "4.3.8.45863",
-    "deviceType": 1
+    "id": "ca30299b-73d4-4e38-88af-c19104ede7d3",
+    "userName": "Russo Roach",
+    "clientVersion": "4.3.1.25914",
+    "osName": "Linux"
   },
   {
-    "id": "f5cd51a5-8332-4b46-9a67-ef01668093f3",
-    "name": "Berger Mallory InfoTeCS Brownsville",
-    "clientVersion": "2.11.6.31494",
-    "deviceType": 1
+    "id": "408f6991-08f4-41a4-8b01-834cc232d6e6",
+    "userName": "Pierce Elliott",
+    "clientVersion": "3.15.9.8716",
+    "osName": "Unknown"
   },
   {
-    "id": "957ee8be-31ba-4f48-b695-7195157c1696",
-    "name": "Mccarthy Haley InfoTeCS Gardners",
-    "clientVersion": "1.15.8.25420",
-    "deviceType": 1
+    "id": "5237307a-3ba5-4d84-9330-c7712a361d66",
+    "userName": "Delaney Burns",
+    "clientVersion": "2.7.2.31209",
+    "osName": "Android"
   },
   {
-    "id": "d30de651-d79a-4672-8c96-b1bf4fd3113c",
-    "name": "Stout Sweeney InfoTeCS Mapletown",
-    "clientVersion": "1.5.2.1369",
-    "deviceType": 1
+    "id": "2cb3c485-3e55-408e-8853-d8055ea52561",
+    "userName": "Jacobs Imogene",
+    "clientVersion": "1.16.3.27005",
+    "osName": "Unknown"
   },
   {
-    "id": "2f1a1d47-f1f3-48bc-88eb-f0986a2c9005",
-    "name": "Landry Mitchell InfoTeCS Dunnavant",
-    "clientVersion": "1.4.7.7333",
-    "deviceType": 0
+    "id": "02d03c12-71ca-4a48-839c-cf5607228dec",
+    "userName": "Ochoa Blanca",
+    "clientVersion": "0.15.6.38088",
+    "osName": "iOS"
   },
   {
-    "id": "1c331010-d6ae-4f90-9282-b9196b782ae8",
-    "name": "Foreman Huffman InfoTeCS Munjor",
-    "clientVersion": "3.6.4.290",
-    "deviceType": 0
+    "id": "8ebab630-33bc-4d3e-ab6d-dab21b5b567e",
+    "userName": "Clarke Shaffer",
+    "clientVersion": "4.16.4.27196",
+    "osName": "iOS"
   },
   {
-    "id": "30efe9bb-c7a2-476f-9740-96cacfcdeeb2",
-    "name": "Parrish Christy InfoTeCS Corriganville",
-    "clientVersion": "5.6.1.27247",
-    "deviceType": 1
+    "id": "2a8eabb9-c8c4-4602-810a-f05eea325028",
+    "userName": "Leonard Tara",
+    "clientVersion": "5.7.2.38480",
+    "osName": "Android"
   },
   {
-    "id": "853c9bb5-713c-4292-86b9-5124f7134dc0",
-    "name": "Hewitt Susan InfoTeCS Rowe",
-    "clientVersion": "3.11.8.19198",
-    "deviceType": 0
+    "id": "3ee99c93-1241-454c-972b-0d5ec3b3253e",
+    "userName": "Fisher Earlene",
+    "clientVersion": "5.12.3.37868",
+    "osName": "iOS"
   },
   {
-    "id": "ddcfd090-ab4d-4eb8-9096-bddfc1bb6ff2",
-    "name": "Mcconnell Tabitha InfoTeCS Grayhawk",
-    "clientVersion": "0.8.3.4163",
-    "deviceType": 1
+    "id": "c75d8b0a-aaf9-4e9e-b401-d25555564f2f",
+    "userName": "Hardy Carmela",
+    "clientVersion": "1.14.9.7174",
+    "osName": "Android"
+  },
+  {
+    "id": "98b7a72d-105c-4367-ad20-dc6c4ad7243a",
+    "userName": "Morin Alejandra",
+    "clientVersion": "1.5.2.3511",
+    "osName": "Android"
+  },
+  {
+    "id": "98222ad1-7d11-4499-ba3d-e4517674d64a",
+    "userName": "Owen Whitney",
+    "clientVersion": "5.11.7.47889",
+    "osName": "Linux"
+  },
+  {
+    "id": "7d4aedfd-dfbd-4366-8d73-0ad1c1df8d45",
+    "userName": "Zamora Lola",
+    "clientVersion": "0.10.8.39831",
+    "osName": "iOS"
+  },
+  {
+    "id": "665e1913-c0f0-46f9-8eab-d09aecb99753",
+    "userName": "Melton Newman",
+    "clientVersion": "5.4.10.23216",
+    "osName": "Android"
+  },
+  {
+    "id": "96e9d4ef-52fb-44af-aa8f-b7b734bad7f8",
+    "userName": "Barron Rojas",
+    "clientVersion": "4.5.5.39367",
+    "osName": "Android"
+  },
+  {
+    "id": "23a9a57f-43f4-45c2-977f-bb5c61b98fce",
+    "userName": "Bass Rhonda",
+    "clientVersion": "2.10.7.14622",
+    "osName": "Unknown"
+  },
+  {
+    "id": "f305b2ec-d3d5-4138-87c6-6532a97afa14",
+    "userName": "Hawkins Owen",
+    "clientVersion": "0.7.3.33997",
+    "osName": "Linux"
+  },
+  {
+    "id": "59474f8a-194a-4f26-bc44-e6a787c0fc9e",
+    "userName": "Munoz Saunders",
+    "clientVersion": "4.7.2.40804",
+    "osName": "Linux"
+  },
+  {
+    "id": "f7201f97-c290-46e1-834e-6a796f0148d0",
+    "userName": "Workman Mercer",
+    "clientVersion": "5.15.2.31400",
+    "osName": "Windows"
+  },
+  {
+    "id": "ba71e190-4bc2-4130-8334-d0838b96801e",
+    "userName": "Leon Marisol",
+    "clientVersion": "2.16.4.9494",
+    "osName": "Windows"
+  },
+  {
+    "id": "66b4ac9d-74b9-4522-a5d5-548fac5b7d6f",
+    "userName": "Alston Bradshaw",
+    "clientVersion": "4.16.4.2476",
+    "osName": "Linux"
+  },
+  {
+    "id": "b53639a5-ea98-416b-98c7-02f70cc0dbd3",
+    "userName": "Poole Owens",
+    "clientVersion": "3.15.8.49917",
+    "osName": "Linux"
+  },
+  {
+    "id": "060683c2-655e-4834-af3d-6456b9a2cb67",
+    "userName": "Boyer Jodi",
+    "clientVersion": "0.4.5.10718",
+    "osName": "Windows"
+  },
+  {
+    "id": "311be18d-19bf-4ab5-b7f8-f4c5d7254103",
+    "userName": "Massey Shawna",
+    "clientVersion": "5.12.5.49189",
+    "osName": "iOS"
+  },
+  {
+    "id": "291a8e0b-5e66-45e8-936e-461283d3d338",
+    "userName": "Pratt Beryl",
+    "clientVersion": "2.7.1.33443",
+    "osName": "Linux"
+  },
+  {
+    "id": "39630028-d5ba-4a9e-996c-0d7f3235defd",
+    "userName": "Christensen Jacquelyn",
+    "clientVersion": "5.11.6.36616",
+    "osName": "Linux"
+  },
+  {
+    "id": "0c06f0f4-7aed-48bf-b28c-245151288725",
+    "userName": "Mccall Beth",
+    "clientVersion": "5.7.4.26131",
+    "osName": "Android"
+  },
+  {
+    "id": "b87f6573-f126-4dfa-a06a-ce97b37fe05f",
+    "userName": "Watts Angeline",
+    "clientVersion": "5.16.10.29142",
+    "osName": "MacOS"
+  },
+  {
+    "id": "e6b80b17-f0de-455c-b317-ca5125f0496c",
+    "userName": "Woodard Jennifer",
+    "clientVersion": "2.8.1.6456",
+    "osName": "Windows"
+  },
+  {
+    "id": "4c5872e2-3052-4120-b058-50ce6261510b",
+    "userName": "Reeves Janis",
+    "clientVersion": "1.4.6.7122",
+    "osName": "Unknown"
+  },
+  {
+    "id": "769f378f-f664-44c1-adf4-35f42920ab11",
+    "userName": "Lancaster Tasha",
+    "clientVersion": "4.16.5.29748",
+    "osName": "MacOS"
   }
 ]

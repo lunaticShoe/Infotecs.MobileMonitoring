@@ -7,28 +7,42 @@ namespace Infotecs.MobileMonitoring.Services;
 public class StatisticsService : IStatisticsService
 {
     //private const string ElementAddedWithId = "Добавлен элемент с id = {0}";
-    private readonly IStatisticsRepository _statisticsRepository;
-    private readonly ILogger _logger;
+    private readonly IStatisticsRepository statisticsRepository;
+    private readonly ILogger logger;
 
     public StatisticsService(IStatisticsRepository statisticsRepository, Serilog.ILogger logger)
     {
-        _statisticsRepository = statisticsRepository;
-        _logger = logger;
+        this.statisticsRepository = statisticsRepository;
+        this.logger = logger;
     }
     
-    public Task<IEnumerable<StatisticsModel>> GetListAsync(CancellationToken token = default)
+    public Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
     {
-        return _statisticsRepository.GetListAsync(token);
+        return statisticsRepository.GetListAsync(token);
     }
 
     public async Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
     {
-        var existingItem = await _statisticsRepository.Get(statisticsModel.Id, token);
+        var existingItem = await statisticsRepository.GetAsync(statisticsModel.Id, token);
 
         if (existingItem is not null)
-            throw new Exception($"Элемент с id = {statisticsModel.Id} уже существует");
+            throw new Exception($"Element with id = {statisticsModel.Id} already exists");
         
-        await _statisticsRepository.CreateAsync(statisticsModel, token);
-        _logger.Debug($"Добавлен элемент с id = {statisticsModel.Id}");
+        await statisticsRepository.CreateAsync(statisticsModel, token);
+        logger.Debug("Element added: {@Statistics}",statisticsModel);
     }
+
+    public async Task UpdateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
+    {
+        var existingItem = await statisticsRepository.GetAsync(statisticsModel.Id, token);
+
+        if (existingItem is null)
+            throw new Exception($"Element with id = {statisticsModel.Id} does not exists");
+        await statisticsRepository.UpdateAsync(existingItem, statisticsModel, token);
+        logger.Debug(
+            "Element altered from {@StatisticsOld}, to {@StatisticsNew}", 
+            existingItem,statisticsModel);
+      
+        
+    } 
 }

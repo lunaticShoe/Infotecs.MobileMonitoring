@@ -1,0 +1,29 @@
+{
+  "runtime": "Net60",
+  "documentGenerator": {
+    "webApiToOpenApi": {
+      "controllerNames": [],
+      "isAspNetCore": true,
+      "defaultUrlTemplate": "api/{controller}/{id?}",
+      "addMissingPathParameters": false,
+      "defaultPropertyNameHandling": "Default",
+      "defaultReferenceTypeNullHandling": "Null",
+      "defaultEnumHandling": "Integer",
+      "flattenInheritanceHierarchy": false,
+      "generateKnownTypes": true,
+      "generateXmlObjects": false,
+      "generateAbstractProperties": false,
+      "ignoreObsoleteProperties": false,
+      "allowReferencesWithProperties": false,
+      "excludedTypeNames": [],
+      "infoTitle": "Infotecs Monitoring Service API",
+      "infoVersion": "1.0.0",
+      "output": "swagger.json",
+      "outputType": "OpenApi3",
+      "assemblyPaths": [
+        "bin/Debug/net6.0/Infotecs.MobileMonitoring.dll"
+      ],
+      "referencePaths": []
+    }
+  }
+}

@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
 
@@ -6,33 +8,40 @@ namespace Infotecs.MobileMonitoring.Repositories;
 
 public class StatisticsRepository : IStatisticsRepository
 {
-    private readonly List<StatisticsModel> _statisticsModels = new();
+    private readonly ConcurrentDictionary<Guid, StatisticsModel> statisticsModels = new();
 
-    public Task<IEnumerable<StatisticsModel>> GetListAsync(CancellationToken token = default)
+    public Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
     {
         if (token.IsCancellationRequested)
         {
-            return Task.FromResult(Enumerable.Empty<StatisticsModel>());
+            return Task.FromResult(Array.Empty<StatisticsModel>() as ICollection<StatisticsModel>);
         }
 
-        return Task.FromResult(_statisticsModels.AsEnumerable());
+        return Task.FromResult(
+            new ReadOnlyCollection<StatisticsModel>(
+                statisticsModels
+                    .Select(kv => kv.Value)
+                    .ToList()) as ICollection<StatisticsModel>);
     }
 
     public Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
     {
-        if (token.IsCancellationRequested)
-        {
-            return Task.CompletedTask;
-        }
-        
-        _statisticsModels.Add(statisticsModel);
-        
+        token.ThrowIfCancellationRequested();
+        statisticsModels.TryAdd(statisticsModel.Id,statisticsModel);
+        return Task.CompletedTask;
+    }
+    public Task UpdateAsync(StatisticsModel oldModel, StatisticsModel newModel, CancellationToken token = default)
+    {
+        token.ThrowIfCancellationRequested();
+        statisticsModels.TryUpdate(oldModel.Id, newModel, oldModel);
         return Task.CompletedTask;
     }
     
-    public Task<StatisticsModel?> Get(Guid id, CancellationToken token = default)
+    public Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default)
     {
         token.ThrowIfCancellationRequested();
-        return Task.FromResult(_statisticsModels.FirstOrDefault(sm => sm.Id == id));
+        if (statisticsModels.TryGetValue(id, out var model))
+            return Task.FromResult(model);
+        return Task.FromResult<StatisticsModel?>(null);
     }
 }

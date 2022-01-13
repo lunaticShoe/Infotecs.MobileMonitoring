@@ -38,7 +38,7 @@ public class StatisticsService : IStatisticsService
 
         if (existingItem is null)
             throw new Exception($"Element with id = {statisticsModel.Id} does not exists");
-        await statisticsRepository.UpdateAsync(existingItem, statisticsModel, token);
+        await statisticsRepository.UpdateAsync(statisticsModel, token);
         logger.Debug(
             "Element altered from {@StatisticsOld}, to {@StatisticsNew}", 
             existingItem,statisticsModel);

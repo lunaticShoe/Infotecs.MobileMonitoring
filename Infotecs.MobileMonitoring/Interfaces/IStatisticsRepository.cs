@@ -20,5 +20,5 @@ public interface IStatisticsRepository
     Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default);
 
     Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default);
-    Task UpdateAsync(StatisticsModel oldModel, StatisticsModel newModel, CancellationToken token = default);
+    Task UpdateAsync(StatisticsModel newModel, CancellationToken token = default);
 }

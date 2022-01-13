@@ -1,47 +1,48 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using Infotecs.MobileMonitoring.Data;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
+using MongoDB.Driver;
 
 namespace Infotecs.MobileMonitoring.Repositories;
 
 public class StatisticsRepository : IStatisticsRepository
 {
-    private readonly ConcurrentDictionary<Guid, StatisticsModel> statisticsModels = new();
-
-    public Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
+    private readonly DataContext dataContext;
+   
+    public StatisticsRepository(DataContext dataContext)
     {
-        if (token.IsCancellationRequested)
-        {
-            return Task.FromResult(Array.Empty<StatisticsModel>() as ICollection<StatisticsModel>);
-        }
-
-        return Task.FromResult(
-            new ReadOnlyCollection<StatisticsModel>(
-                statisticsModels
-                    .Select(kv => kv.Value)
-                    .ToList()) as ICollection<StatisticsModel>);
-    }
-
-    public Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
-    {
-        token.ThrowIfCancellationRequested();
-        statisticsModels.TryAdd(statisticsModel.Id,statisticsModel);
-        return Task.CompletedTask;
-    }
-    public Task UpdateAsync(StatisticsModel oldModel, StatisticsModel newModel, CancellationToken token = default)
-    {
-        token.ThrowIfCancellationRequested();
-        statisticsModels.TryUpdate(oldModel.Id, newModel, oldModel);
-        return Task.CompletedTask;
+        this.dataContext = dataContext;
     }
     
-    public Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default)
+    public async Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
     {
-        token.ThrowIfCancellationRequested();
-        if (statisticsModels.TryGetValue(id, out var model))
-            return Task.FromResult(model);
-        return Task.FromResult<StatisticsModel?>(null);
+        var collection = await dataContext.PrepareStatisticsCollection(token);
+        return await collection.AsQueryable().ToListAsync(token);
+    }
+
+    public async Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
+    {
+        var collection = await dataContext.PrepareStatisticsCollection(token);
+        await collection.InsertOneAsync(statisticsModel, null,token);
+
+    }
+    public async Task UpdateAsync(StatisticsModel newModel, CancellationToken token = default)
+    {
+        var collection = await dataContext.PrepareStatisticsCollection(token);
+        var searchFilter = Builders<StatisticsModel>.Filter.Eq(f => f.Id, newModel.Id);
+        await collection.ReplaceOneAsync(searchFilter, newModel,new ReplaceOptions
+        {
+            IsUpsert = true
+        }, token);
+    }
+    
+    public async Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default)
+    {
+        var collection = await dataContext.PrepareStatisticsCollection(token);
+        var searchFilter = Builders<StatisticsModel>.Filter.Eq(f => f.Id, id);
+        return await collection.Find(searchFilter).FirstOrDefaultAsync(token);
     }
 }

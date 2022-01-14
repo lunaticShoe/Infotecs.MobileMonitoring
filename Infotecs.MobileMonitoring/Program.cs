@@ -15,14 +15,16 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddNSwag();
-builder.Services.AddSingleton<DataContext>(s =>
-    new DataContext(builder.Configuration["mongodbConnection"]));
+builder.Services.AddMongoDbContext(builder.Configuration["mongodbConnection"]);
+builder.Services.AddMongoDbMigrations();
 builder.Services.AddMapsterConfiguration();
 builder.Services.AddSerilogServices(
     new LoggerConfiguration(), 
     builder.Configuration["seqConnection"]);
 builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<IEventService, EventService>();
 
 var app = builder.Build();
 
@@ -32,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerInfrastructure();
 }
 
+var migrator = app.Services.GetRequiredService<IMongoDbMigrator>();
+migrator.Migrate();
 //app.UseHttpsRedirection();
 
 app.UseRouting();

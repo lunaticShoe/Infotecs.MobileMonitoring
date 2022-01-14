@@ -28,6 +28,8 @@ public class StatisticsService : IStatisticsService
         if (existingItem is not null)
             throw new Exception($"Element with id = {statisticsModel.Id} already exists");
         
+        statisticsModel.CreatedAt = DateTime.UtcNow;
+        
         await statisticsRepository.CreateAsync(statisticsModel, token);
         logger.Debug("Element added: {@Statistics}",statisticsModel);
     }

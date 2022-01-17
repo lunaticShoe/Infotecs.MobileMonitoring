@@ -16,7 +16,7 @@ namespace Infotecs.MobileMonitoring.Controllers
     public class StatisticsController : ControllerBase
     {
         private readonly IStatisticsService statisticsService;
-
+        
         public StatisticsController(IStatisticsService statisticsService)
         {
             this.statisticsService = statisticsService;

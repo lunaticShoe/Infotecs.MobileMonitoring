@@ -1,47 +1,45 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using Infotecs.MobileMonitoring.Data;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
+using MongoDB.Driver;
 
 namespace Infotecs.MobileMonitoring.Repositories;
 
 public class StatisticsRepository : IStatisticsRepository
 {
-    private readonly ConcurrentDictionary<Guid, StatisticsModel> statisticsModels = new();
+    //private readonly DataContext dataContext;
+    private readonly IMongoCollection<StatisticsModel> collection;
 
-    public Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
+    public StatisticsRepository(IMongoDbContext mongoDbContext)
     {
-        if (token.IsCancellationRequested)
-        {
-            return Task.FromResult(Array.Empty<StatisticsModel>() as ICollection<StatisticsModel>);
-        }
-
-        return Task.FromResult(
-            new ReadOnlyCollection<StatisticsModel>(
-                statisticsModels
-                    .Select(kv => kv.Value)
-                    .ToList()) as ICollection<StatisticsModel>);
+        //this.dataContext = dataContext;
+        collection = mongoDbContext.GetStatisticsCollection();
+    }
+    
+    public async Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
+    {
+        return await collection.AsQueryable().ToListAsync(token);
     }
 
     public Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
     {
-        token.ThrowIfCancellationRequested();
-        statisticsModels.TryAdd(statisticsModel.Id,statisticsModel);
-        return Task.CompletedTask;
+        return collection.InsertOneAsync(statisticsModel, null,token);
     }
-    public Task UpdateAsync(StatisticsModel oldModel, StatisticsModel newModel, CancellationToken token = default)
+    public Task UpdateAsync(StatisticsModel newModel, CancellationToken token = default)
     {
-        token.ThrowIfCancellationRequested();
-        statisticsModels.TryUpdate(oldModel.Id, newModel, oldModel);
-        return Task.CompletedTask;
+        var searchFilter = Builders<StatisticsModel>.Filter.Eq(f => f.Id, newModel.Id);
+        return collection.ReplaceOneAsync(searchFilter, newModel,new ReplaceOptions
+        {
+            IsUpsert = true
+        }, token);
     }
     
     public Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default)
     {
-        token.ThrowIfCancellationRequested();
-        if (statisticsModels.TryGetValue(id, out var model))
-            return Task.FromResult(model);
-        return Task.FromResult<StatisticsModel?>(null);
+        var searchFilter = Builders<StatisticsModel>.Filter.Eq(f => f.Id, id);
+        return collection.Find(searchFilter).FirstOrDefaultAsync(token);
     }
 }

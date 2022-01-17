@@ -5,7 +5,6 @@ using MongoDB.Bson.Serialization.Conventions;
 using Infotecs.MobileMonitoring.Data;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Migrator;
-using MongoDB.Bson.Serialization;
 using Serilog;
 
 namespace Infotecs.MobileMonitoring.Extensions;
@@ -36,7 +35,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddMapsterConfiguration(this IServiceCollection services)
     {
         TypeAdapterConfig<StatisticsContract, StatisticsModel>.ForType();
-        TypeAdapterConfig<EventCreateContract, EventModel>.ForType();
+       // TypeAdapterConfig<EventCreateContract, EventModel>.ForType();
         TypeAdapterConfig<EventModel, EventContract>.ForType();
         return services;
     }
@@ -68,16 +67,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddMongoDbContext(this IServiceCollection services, string connectionString)
     {
-        BsonClassMap.RegisterClassMap<StatisticsModel>(cm =>
-        {
-            cm.AutoMap();
-            cm.MapIdMember(parameter => parameter.Id);
-        });
-        
-        BsonClassMap.RegisterClassMap<EventModel>(cm =>
-        {
-            cm.AutoMap();
-        });
+        MongoDbMapper.Map();
         
         var conventionPack = new ConventionPack();
         conventionPack.Add(new CamelCaseElementNameConvention());

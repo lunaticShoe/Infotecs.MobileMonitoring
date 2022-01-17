@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e624814b_002Dd67b_002D43da_002Db0f4_002Da05dc809caea/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Should_Create_Statistics_Item" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::92D34568-8523-4AE0-A1C6-4BE0A75B4D73::net6.0::Infotecs.MobileMonitoring.Tests.UnitTests.Services.StatisticsServiceTests.Should_Create_Statistics_Item&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::92D34568-8523-4AE0-A1C6-4BE0A75B4D73::net6.0::Infotecs.MobileMonitoring.Tests.UnitTests.Services.StatisticsServiceTests.Should_Not_Create_Existing_Statistics_Item&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::92D34568-8523-4AE0-A1C6-4BE0A75B4D73::net6.0::Infotecs.MobileMonitoring.Tests.UnitTests.Services.EventServiceTests.Should_Create_Events_Range&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::92D34568-8523-4AE0-A1C6-4BE0A75B4D73::net6.0::Infotecs.MobileMonitoring.Tests.UnitTests.Services.EventServiceTests.Should_Not_Create_Events_Range_Invalid_Data&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::92D34568-8523-4AE0-A1C6-4BE0A75B4D73::net6.0::Infotecs.MobileMonitoring.Tests.UnitTests.Services.EventServiceTests.Should_Not_Create_Events_Range_Statistics_Does_Not_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::92D34568-8523-4AE0-A1C6-4BE0A75B4D73::net6.0::Infotecs.MobileMonitoring.Tests.IntegrationTests.Repositories.StatisticsRepositoryTests.Should_Create_Statistics_Item&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

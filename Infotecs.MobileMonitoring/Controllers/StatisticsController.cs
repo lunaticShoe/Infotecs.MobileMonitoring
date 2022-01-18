@@ -34,7 +34,7 @@ namespace Infotecs.MobileMonitoring.Controllers
         {
             //statisticsModel.CreatedAt = DateTime.Now;
             var statisticsModel = statisticsContract.Adapt<StatisticsModel>();
-            var events = statisticsContract.Events.Adapt<ICollection<EventModel>>();
+            var events = statisticsContract.Events.Adapt<EventModel[]>();
 
             await statisticsService.CreateAsync(statisticsModel, cancellationToken);
             await eventService.CreateRangeAsync(statisticsModel.Id, events, cancellationToken);
@@ -47,6 +47,12 @@ namespace Infotecs.MobileMonitoring.Controllers
             var statisticsModel = statisticsContract.Adapt<StatisticsModel>();
             await statisticsService.UpdateAsync(statisticsModel,cancellationToken);
             return NoContent();
+        }
+
+        [HttpGet("{id:guid}")]
+        public Task<StatisticsModel> Get(Guid id, CancellationToken cancellationToken)
+        {
+            return statisticsService.GetAsync(id, cancellationToken);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Infotecs.MobileMonitoring.Controllers
             Guid statisticsId, CancellationToken cancellationToken = default)
         {
             return (await eventService.GetListAsync(statisticsId, cancellationToken))
-                .Adapt<ICollection<EventContract>>();
+                .Adapt<EventContract[]>();
         }
         //
         // [HttpPut("create")]

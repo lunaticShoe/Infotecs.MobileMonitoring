@@ -7,13 +7,14 @@ using AutoFixture;
 using Docker.DotNet;
 using Docker.DotNet.Models;
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using Infotecs.MobileMonitoring.Models;
 using Infotecs.MobileMonitoring.Repositories;
 using Infotecs.MobileMonitoring.Tests.IntegrationTests.Fixtures;
 using Xunit;
 
 namespace Infotecs.MobileMonitoring.Tests.IntegrationTests.Repositories;
-
+[CollectionDefinition("Mongo collection")]
 public class StatisticsRepositoryTests : IClassFixture<MongoDbFixture>
 {
     private static readonly Fixture fixture = new();
@@ -32,29 +33,31 @@ public class StatisticsRepositoryTests : IClassFixture<MongoDbFixture>
         var statisticsModel = fixture.Create<StatisticsModel>();
         // Act
         await repo.CreateAsync(statisticsModel);
-        var resultModel = await repo.GetAsync(statisticsModel.Id);
         // Assert
+        var resultModel = await repo.GetAsync(statisticsModel.Id);
         resultModel.Should().NotBeNull();
         resultModel.Should().BeEquivalentTo(statisticsModel,
             options =>
             {
+                options.Using<StatisticsModel>(ctx => 
+                    ctx.Subject.CreatedAt.Date.Should().Be(ctx.Expectation.CreatedAt.Date));
                 options.Excluding(s => s.CreatedAt);
                 return options;
             });
     }
     [Fact]
-    public async Task Should_Update_Statistics_Item()
+    public async Task Should_UpdateStatistics_StatisticsModel()
     {
         // Arrange
         var repo = new StatisticsRepository(mongoDbFixture.Context);
         var statisticsModel = fixture.Create<StatisticsModel>();
         var userName = "statistics-unit-test";
-        // Act
         await repo.CreateAsync(statisticsModel);
         statisticsModel.UserName = userName;
+        // Act
         await repo.UpdateAsync(statisticsModel);
-        var resultModel = await repo.GetAsync(statisticsModel.Id);
         // Assert
+        var resultModel = await repo.GetAsync(statisticsModel.Id);
         resultModel.Should().NotBeNull();
         resultModel.UserName.Should().Be(userName);
     }

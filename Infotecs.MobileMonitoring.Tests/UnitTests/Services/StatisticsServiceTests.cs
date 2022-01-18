@@ -44,7 +44,7 @@ public class StatisticsServiceTests
     }
     
     [Fact]
-    public async Task Should_Not_Create_Existing_Statistics_Item()
+    public async Task Should_NotCreateExistingStatisticsItem_Throws()
     {
         // Arrange
         var logger = new Mock<ILogger>();
@@ -58,16 +58,12 @@ public class StatisticsServiceTests
             .ReturnsAsync(statisticsItem);
         
         // Act
-        try
-        {
-            await statisticsService.CreateAsync(statisticsItem, CancellationToken.None);
-            Assert.True(false, "Invalid statistics item created");
-        }
-        catch (ElementAlreadyExistsException)
-        {
-            Assert.True(true);
-        }
+        Func<Task> act = () => statisticsService.CreateAsync(statisticsItem, CancellationToken.None);
         
+        // Assert
+        await act.Should()
+            .ThrowAsync<ElementAlreadyExistsException>("Invalid statistics item created");
+
     }
     
 }

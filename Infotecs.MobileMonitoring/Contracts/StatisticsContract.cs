@@ -8,5 +8,5 @@ public class StatisticsContract
     public string UserName { get; set; }
     public string ClientVersion { get; set; }
     public string OsName { get; set; }
-    public ICollection<EventContract> Events { get; set; }
+    public List<EventContract> Events { get; set; }
 }

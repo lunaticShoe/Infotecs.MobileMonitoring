@@ -22,6 +22,11 @@ public class StatisticsService : IStatisticsService
         return statisticsRepository.GetListAsync(token);
     }
 
+    public Task<StatisticsModel> GetAsync(Guid id, CancellationToken token = default)
+    {
+        return statisticsRepository.GetAsync(id, token);
+    }
+    
     public async Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
     {
         var existingItem = await statisticsRepository.GetAsync(statisticsModel.Id, token);

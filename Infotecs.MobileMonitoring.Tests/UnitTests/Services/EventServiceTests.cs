@@ -70,26 +70,19 @@ public class EventServiceTests
                 string.Join(string.Empty,fixture.CreateMany<char>(55)))
             .CreateMany()
             .ToArray();
-        ICollection<EventModel> resultList = null;
         
         eventsRepo
             .Setup(e =>
-                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None))
-            .Callback((ICollection<EventModel> inEvents, CancellationToken _) =>
-            {
-                resultList = inEvents;
-            });
+                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None));
        
         // Act
-        try
-        {
-            await eventService.CreateRangeAsync(statisticsItem.Id, events);
-            Assert.True(false, "Invalid data was written");
-        }
-        catch (ElementDoesNotExistsException)
-        {
-            Assert.True(true);
-        }
+        Func<Task> act = () => eventService.CreateRangeAsync(statisticsItem.Id, events);
+        
+        // Assert
+        await act.Should().ThrowAsync<ElementDoesNotExistsException>("Invalid data was written");
+        eventsRepo.Verify(e =>
+            e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None), 
+            () => Times.Never());   
     }
     
     [Fact]
@@ -107,7 +100,7 @@ public class EventServiceTests
                 string.Join(string.Empty,fixture.CreateMany<char>(55)))
             .CreateMany()
             .ToArray();
-        ICollection<EventModel> resultList = null;
+        //ICollection<EventModel> resultList = null;
 
         statisticsRepo
             .Setup(s => 
@@ -115,21 +108,15 @@ public class EventServiceTests
             .ReturnsAsync(statisticsItem);
         eventsRepo
             .Setup(e =>
-                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None))
-            .Callback((ICollection<EventModel> inEvents, CancellationToken _) =>
-            {
-                resultList = inEvents;
-            });
+                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None));
        
         // Act
-        try
-        {
-            await eventService.CreateRangeAsync(statisticsItem.Id, events);
-            Assert.True(false, "Invalid data was written");
-        }
-        catch (ArgumentException)
-        {
-            Assert.True(true);
-        }
+        Func<Task> act = () => eventService.CreateRangeAsync(statisticsItem.Id, events);
+        
+        // Assert
+        await act.Should().ThrowAsync<ArgumentException>("Invalid data was written");
+        eventsRepo.Verify(e => 
+            e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None), 
+            () => Times.Never());   
     }
 }

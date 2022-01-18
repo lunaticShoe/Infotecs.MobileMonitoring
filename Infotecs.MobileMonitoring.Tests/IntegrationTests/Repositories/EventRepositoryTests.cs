@@ -9,7 +9,7 @@ using Infotecs.MobileMonitoring.Tests.IntegrationTests.Fixtures;
 using Xunit;
 
 namespace Infotecs.MobileMonitoring.Tests.IntegrationTests.Repositories;
-
+[CollectionDefinition("Mongo collection")]
 public class EventRepositoryTests : IClassFixture<MongoDbFixture>
 {
     private static readonly Fixture fixture = new();
@@ -21,7 +21,7 @@ public class EventRepositoryTests : IClassFixture<MongoDbFixture>
     }
 
     [Fact]
-    public async Task Should_Create_Events_List()
+    public async Task Should_CreateEvents_List()
     {
         // Arrange
         var statId = Guid.NewGuid();

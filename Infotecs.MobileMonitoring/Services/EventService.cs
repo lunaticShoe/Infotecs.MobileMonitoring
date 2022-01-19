@@ -8,14 +8,18 @@ namespace Infotecs.MobileMonitoring.Services;
 
 public class EventService : IEventService
 {
-    private readonly IEventRepository eventRepository;
-    private readonly IStatisticsRepository statisticsRepository;
+    // private readonly IEventRepository eventRepository;
+    // private readonly IStatisticsRepository statisticsRepository;
+    private readonly IUnitOfWork unitOfWork;
+    private readonly ISessionContainerFactory sessionContainerFactory;
     private readonly ILogger logger;
 
-    public EventService(IEventRepository eventRepository, IStatisticsRepository statisticsRepository, ILogger logger)
+    public EventService(IUnitOfWork unitOfWork, ISessionContainerFactory sessionContainerFactory, ILogger logger)
     {
-        this.eventRepository = eventRepository;
-        this.statisticsRepository = statisticsRepository;
+        // this.eventRepository = eventRepository;
+        // this.statisticsRepository = statisticsRepository;
+        this.unitOfWork = unitOfWork;
+        this.sessionContainerFactory = sessionContainerFactory;
         this.logger = logger;
     }
 
@@ -27,7 +31,7 @@ public class EventService : IEventService
         if (eventModel.Name.IsNullOrEmpty())
             throw new Exception("Event name is null or empty");
         
-        var statisticsModel = await statisticsRepository.GetAsync(eventModel.StatisticsId, cancellationToken);
+        var statisticsModel = await unitOfWork.StatisticsRepository.GetAsync(eventModel.StatisticsId, cancellationToken);
 
         if (statisticsModel is null)
             throw new Exception($"Element with id = {eventModel.StatisticsId} does not exists");
@@ -37,19 +41,19 @@ public class EventService : IEventService
             eventModel.Name = eventModel.Name[..50];
         }
         
-        await eventRepository.CreateAsync(eventModel, cancellationToken);
+        await unitOfWork.EventRepository.CreateAsync(eventModel, cancellationToken);
         logger.Debug("Element added: {@Event}",eventModel);
     }
 
     public async Task CreateRangeAsync(Guid statisticsId, ICollection<EventModel> eventModels, CancellationToken cancellationToken = default)
     {
-        if (statisticsId == default)
-            throw new Exception($"Invalid statistics Id");
-
-        var statisticsModel = await statisticsRepository.GetAsync(statisticsId, cancellationToken);
-
-        if (statisticsModel is null)
-            throw new ElementDoesNotExistsException(statisticsId);
+        // if (statisticsId == default)
+        //     throw new Exception($"Invalid statistics Id");
+        //
+        // var statisticsModel = await unitOfWork.StatisticsRepository.GetAsync(statisticsId, cancellationToken);
+        //
+        // if (statisticsModel is null)
+        //     throw new ElementDoesNotExistsException(statisticsId);
 
         var hasBadEvents = eventModels
             .Any(e => e.Name.IsNullOrEmpty() || e.Name.Length > 50);
@@ -61,7 +65,7 @@ public class EventService : IEventService
         {
             eventModel.StatisticsId = statisticsId;
         }
-        await eventRepository.CreateRangeAsync(eventModels, cancellationToken);
+        await unitOfWork.EventRepository.CreateRangeAsync(eventModels, cancellationToken);
         logger.Debug(
             "Elements for statistics id = {StatisticsId} added: {@Events}", 
             statisticsId, eventModels);
@@ -69,6 +73,6 @@ public class EventService : IEventService
 
     public Task<ICollection<EventModel>> GetListAsync(Guid statisticsId, CancellationToken cancellationToken)
     {
-        return eventRepository.GetListAsync(statisticsId, cancellationToken);
+        return unitOfWork.EventRepository.GetListAsync(statisticsId, cancellationToken);
     }
 }

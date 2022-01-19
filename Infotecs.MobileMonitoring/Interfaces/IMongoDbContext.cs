@@ -8,4 +8,7 @@ public interface IMongoDbContext
     IMongoCollection<StatisticsModel> GetStatisticsCollection();
     IMongoCollection<EventModel> GetEventCollection();
     IMongoDatabase Database { get; }
+   // IClientSessionHandle Session { get; }
+    IClientSessionHandle StartSession();
+    Task<IClientSessionHandle> StartSessionAsync(CancellationToken cancellationToken = default);
 }

@@ -9,19 +9,21 @@ namespace Infotecs.MobileMonitoring.Repositories;
 
 public class EventRepository : IEventRepository
 {
+    private readonly IClientSessionHandle? session;
+
     //private readonly DataContext dataContext;
     private readonly IMongoCollection<EventModel> collection;
 
-    public EventRepository(IMongoDbContext mongoDbContext)
+    public EventRepository(IMongoDbContext mongoDbContext, IClientSessionHandle? session = null)
     {
-      //  this.dataContext = dataContext;
+        this.session = session;
         collection = mongoDbContext.GetEventCollection();
     }
 
     public async Task<ICollection<EventModel>> GetListAsync(Guid? statisticsId = null, CancellationToken cancellationToken = default)
     {
         return await collection
-            .AsQueryable()
+            .AsQueryable(session)
             .If(!statisticsId.IsNullOrEmpty(), 
                 c => c
                     .Where(eventModel => eventModel.StatisticsId == statisticsId!))
@@ -30,11 +32,11 @@ public class EventRepository : IEventRepository
 
     public Task CreateAsync(EventModel eventModel, CancellationToken cancellationToken = default)
     {
-        return collection.InsertOneAsync(eventModel, null,cancellationToken);
+        return collection.InsertOneAsync(session, eventModel, null,cancellationToken);
     }
 
     public Task CreateRangeAsync(ICollection<EventModel> events, CancellationToken cancellationToken = default)
     {
-        return collection.InsertManyAsync(events,null, cancellationToken);
+        return collection.InsertManyAsync(session, events,null, cancellationToken);
     }
 }

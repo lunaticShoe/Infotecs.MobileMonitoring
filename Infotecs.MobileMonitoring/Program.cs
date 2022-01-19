@@ -1,6 +1,7 @@
 using System.Reflection;
 using Infotecs.MobileMonitoring.Data;
 using Infotecs.MobileMonitoring.Extensions;
+using Infotecs.MobileMonitoring.Factories;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Repositories;
 using Infotecs.MobileMonitoring.Services;
@@ -21,8 +22,12 @@ builder.Services.AddMapsterConfiguration();
 builder.Services.AddSerilogServices(
     new LoggerConfiguration(), 
     builder.Configuration["seqConnection"]);
-builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
-builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<ISessionContainerFactory, SessionContainerFactory>();
+
+//builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
+//builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+//builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<IEventService, EventService>();
 

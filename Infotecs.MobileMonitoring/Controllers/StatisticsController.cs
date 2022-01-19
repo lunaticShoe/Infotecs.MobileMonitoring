@@ -16,10 +16,12 @@ namespace Infotecs.MobileMonitoring.Controllers
     public class StatisticsController : ControllerBase
     {
         private readonly IStatisticsService statisticsService;
-        
-        public StatisticsController(IStatisticsService statisticsService)
+        private readonly IEventService eventService;
+
+        public StatisticsController(IStatisticsService statisticsService, IEventService eventService)
         {
             this.statisticsService = statisticsService;
+            this.eventService = eventService;
         }
         
         [HttpGet("list")]
@@ -32,7 +34,10 @@ namespace Infotecs.MobileMonitoring.Controllers
         {
             //statisticsModel.CreatedAt = DateTime.Now;
             var statisticsModel = statisticsContract.Adapt<StatisticsModel>();
+            var events = statisticsContract.Events.Adapt<EventModel[]>();
+
             await statisticsService.CreateAsync(statisticsModel, cancellationToken);
+            await eventService.CreateRangeAsync(statisticsModel.Id, events, cancellationToken);
             return NoContent();
         }
 
@@ -42,6 +47,12 @@ namespace Infotecs.MobileMonitoring.Controllers
             var statisticsModel = statisticsContract.Adapt<StatisticsModel>();
             await statisticsService.UpdateAsync(statisticsModel,cancellationToken);
             return NoContent();
+        }
+
+        [HttpGet("{id:guid}")]
+        public Task<StatisticsModel> Get(Guid id, CancellationToken cancellationToken)
+        {
+            return statisticsService.GetAsync(id, cancellationToken);
         }
     }
 }

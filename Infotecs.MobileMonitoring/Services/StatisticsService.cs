@@ -1,3 +1,4 @@
+using Infotecs.MobileMonitoring.Exceptions;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
 using ILogger = Serilog.ILogger;
@@ -21,12 +22,17 @@ public class StatisticsService : IStatisticsService
         return statisticsRepository.GetListAsync(token);
     }
 
+    public Task<StatisticsModel> GetAsync(Guid id, CancellationToken token = default)
+    {
+        return statisticsRepository.GetAsync(id, token);
+    }
+    
     public async Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
     {
         var existingItem = await statisticsRepository.GetAsync(statisticsModel.Id, token);
 
         if (existingItem is not null)
-            throw new Exception($"Element with id = {statisticsModel.Id} already exists");
+            throw new ElementAlreadyExistsException(statisticsModel.Id);
         
         statisticsModel.CreatedAt = DateTime.UtcNow;
         

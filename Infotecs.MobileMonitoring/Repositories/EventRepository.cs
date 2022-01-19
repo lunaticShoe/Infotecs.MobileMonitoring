@@ -32,4 +32,9 @@ public class EventRepository : IEventRepository
     {
         return collection.InsertOneAsync(eventModel, null,cancellationToken);
     }
+
+    public Task CreateRangeAsync(ICollection<EventModel> events, CancellationToken cancellationToken = default)
+    {
+        return collection.InsertManyAsync(events,null, cancellationToken);
+    }
 }

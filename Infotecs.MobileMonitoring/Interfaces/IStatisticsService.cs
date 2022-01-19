@@ -8,4 +8,5 @@ public interface IStatisticsService
 
     Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default);
     Task UpdateAsync(StatisticsModel statisticsModel, CancellationToken token = default);
+    Task<StatisticsModel> GetAsync(Guid id, CancellationToken token = default);
 }

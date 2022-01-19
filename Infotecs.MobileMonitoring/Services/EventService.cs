@@ -1,3 +1,4 @@
+using Infotecs.MobileMonitoring.Exceptions;
 using Infotecs.MobileMonitoring.Extensions;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
@@ -22,10 +23,13 @@ public class EventService : IEventService
     {
         if (eventModel.StatisticsId == default)
             throw new Exception($"Invalid statistics Id");
-        
-        var existingItem = await statisticsRepository.GetAsync(eventModel.StatisticsId, cancellationToken);
 
-        if (existingItem is null)
+        if (eventModel.Name.IsNullOrEmpty())
+            throw new Exception("Event name is null or empty");
+        
+        var statisticsModel = await statisticsRepository.GetAsync(eventModel.StatisticsId, cancellationToken);
+
+        if (statisticsModel is null)
             throw new Exception($"Element with id = {eventModel.StatisticsId} does not exists");
         
         if (eventModel.Name.Length > 50)
@@ -34,7 +38,33 @@ public class EventService : IEventService
         }
         
         await eventRepository.CreateAsync(eventModel, cancellationToken);
-        logger.Debug("Element added: {@EventModel}",eventModel);
+        logger.Debug("Element added: {@Event}",eventModel);
+    }
+
+    public async Task CreateRangeAsync(Guid statisticsId, ICollection<EventModel> eventModels, CancellationToken cancellationToken = default)
+    {
+        if (statisticsId == default)
+            throw new Exception($"Invalid statistics Id");
+
+        var statisticsModel = await statisticsRepository.GetAsync(statisticsId, cancellationToken);
+
+        if (statisticsModel is null)
+            throw new ElementDoesNotExistsException(statisticsId);
+
+        var hasBadEvents = eventModels
+            .Any(e => e.Name.IsNullOrEmpty() || e.Name.Length > 50);
+        
+        if (hasBadEvents) 
+            throw new ArgumentException("Some of event names are invalid");
+        
+        foreach (var eventModel in eventModels)
+        {
+            eventModel.StatisticsId = statisticsId;
+        }
+        await eventRepository.CreateRangeAsync(eventModels, cancellationToken);
+        logger.Debug(
+            "Elements for statistics id = {StatisticsId} added: {@Events}", 
+            statisticsId, eventModels);
     }
 
     public Task<ICollection<EventModel>> GetListAsync(Guid statisticsId, CancellationToken cancellationToken)

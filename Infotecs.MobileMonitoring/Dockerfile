@@ -10,7 +10,7 @@ ENV seqConnection="http://host.docker.internal:5341"
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["./Infotecs.MobileMonitoring/Infotecs.MobileMonitoring.csproj", "Infotecs.MobileMonitoring/"]
-RUN dotnet restore "Infotecs.MobileMonitoring/Infotecs.MobileMonitoring.csproj"
+RUN dotnet restore "./Infotecs.MobileMonitoring/Infotecs.MobileMonitoring.csproj"
 COPY . .
 WORKDIR "/src/Infotecs.MobileMonitoring"
 RUN dotnet build "Infotecs.MobileMonitoring.csproj" -c Release -o /app/build

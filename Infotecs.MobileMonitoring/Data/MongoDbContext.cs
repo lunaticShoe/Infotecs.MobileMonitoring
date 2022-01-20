@@ -15,11 +15,13 @@ public class MongoDbContext : IMongoDbContext
 
     private readonly MongoClient mongoClient;
     private readonly IMongoDatabase mongoDatabase;
+    //private readonly IClientSessionHandle session;
     
     public MongoDbContext(string connectionString)
     {
         mongoClient = new MongoClient(connectionString);
         mongoDatabase = mongoClient.GetDatabase(DbName);
+        
     }
 
 
@@ -28,8 +30,12 @@ public class MongoDbContext : IMongoDbContext
         
     public IMongoCollection<EventModel> GetEventCollection() => 
         mongoDatabase.GetCollection<EventModel>(EventCollectionName);
-
+    public IClientSessionHandle StartSession() => mongoClient.StartSession();
     public IMongoDatabase Database => mongoDatabase;
+    public Task<IClientSessionHandle> StartSessionAsync(CancellationToken cancellationToken = default) => 
+        mongoClient.StartSessionAsync(null, cancellationToken);
+
+    //  public IMongoClient MongoClient => mongoClient;
     // public async Task<IMongoCollection<StatisticsModel>> PrepareStatisticsCollection(
     //     CancellationToken cancellationToken = default)
     // {

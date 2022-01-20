@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Contracts;
+using Infotecs.MobileMonitoring.Dto;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
 using Mapster;
@@ -33,11 +34,13 @@ namespace Infotecs.MobileMonitoring.Controllers
         public async Task<IActionResult> Create(StatisticsContract statisticsContract, CancellationToken cancellationToken)
         {
             //statisticsModel.CreatedAt = DateTime.Now;
-            var statisticsModel = statisticsContract.Adapt<StatisticsModel>();
-            var events = statisticsContract.Events.Adapt<EventModel[]>();
+            //var statisticsModel = statisticsContract.Adapt<StatisticsModel>();
+            //var events = statisticsContract.Events.Adapt<EventModel[]>();
 
-            await statisticsService.CreateAsync(statisticsModel, cancellationToken);
-            await eventService.CreateRangeAsync(statisticsModel.Id, events, cancellationToken);
+            var statisticsDto = statisticsContract.Adapt<StatisticsDto>();
+            
+            await statisticsService.CreateAsync(statisticsDto, cancellationToken);
+            //await eventService.CreateRangeAsync(statisticsModel.Id, events, cancellationToken);
             return NoContent();
         }
 

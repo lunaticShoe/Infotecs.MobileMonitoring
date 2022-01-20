@@ -10,18 +10,21 @@ namespace Infotecs.MobileMonitoring.Repositories;
 
 public class StatisticsRepository : IStatisticsRepository
 {
+    private readonly IClientSessionHandle session;
+
     //private readonly DataContext dataContext;
     private readonly IMongoCollection<StatisticsModel> collection;
 
-    public StatisticsRepository(IMongoDbContext mongoDbContext)
+    public StatisticsRepository(IMongoDbContext mongoDbContext, IClientSessionHandle session)
     {
+        this.session = session;
         //this.dataContext = dataContext;
         collection = mongoDbContext.GetStatisticsCollection();
     }
     
     public async Task<ICollection<StatisticsModel>> GetListAsync(CancellationToken token = default)
     {
-        return await collection.AsQueryable().ToListAsync(token);
+        return await collection.AsQueryable(session).ToListAsync(token);
     }
 
     public Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
@@ -31,7 +34,7 @@ public class StatisticsRepository : IStatisticsRepository
     public Task UpdateAsync(StatisticsModel newModel, CancellationToken token = default)
     {
         var searchFilter = Builders<StatisticsModel>.Filter.Eq(f => f.Id, newModel.Id);
-        return collection.ReplaceOneAsync(searchFilter, newModel,new ReplaceOptions
+        return collection.ReplaceOneAsync(session, searchFilter, newModel,new ReplaceOptions
         {
             IsUpsert = true
         }, token);
@@ -40,6 +43,6 @@ public class StatisticsRepository : IStatisticsRepository
     public Task<StatisticsModel?> GetAsync(Guid id, CancellationToken token = default)
     {
         var searchFilter = Builders<StatisticsModel>.Filter.Eq(f => f.Id, id);
-        return collection.Find(searchFilter).FirstOrDefaultAsync(token);
+        return collection.Find(session, searchFilter).FirstOrDefaultAsync(token);
     }
 }

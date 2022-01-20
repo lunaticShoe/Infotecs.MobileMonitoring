@@ -29,7 +29,7 @@ public class StatisticsRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Should_Create_Statistics_Item()
     {
         // Arrange
-        var repo = new StatisticsRepository(mongoDbFixture.Context);
+        var repo = new StatisticsRepository(mongoDbFixture.Context, mongoDbFixture.Context.StartSession());
         var statisticsModel = fixture.Create<StatisticsModel>();
         // Act
         await repo.CreateAsync(statisticsModel);
@@ -49,7 +49,7 @@ public class StatisticsRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Should_UpdateStatistics_StatisticsModel()
     {
         // Arrange
-        var repo = new StatisticsRepository(mongoDbFixture.Context);
+        var repo = new StatisticsRepository(mongoDbFixture.Context, mongoDbFixture.Context.StartSession());
         var statisticsModel = fixture.Create<StatisticsModel>();
         var userName = "statistics-unit-test";
         await repo.CreateAsync(statisticsModel);

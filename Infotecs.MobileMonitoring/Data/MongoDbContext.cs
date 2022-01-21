@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -11,6 +13,7 @@ public class MongoDbContext : IMongoDbContext
 {
     private const string StatisticsCollectionName = "statistics";
     private const string EventCollectionName = "events";
+    private const string EventDictionaryCollectionName = "eventDictionary";
     private const string DbName = "monitoring";
 
     private readonly MongoClient mongoClient;
@@ -30,41 +33,10 @@ public class MongoDbContext : IMongoDbContext
         
     public IMongoCollection<EventModel> GetEventCollection() => 
         mongoDatabase.GetCollection<EventModel>(EventCollectionName);
+    public IMongoCollection<EventDictionaryModel> GetEventDictionaryCollection() => 
+        mongoDatabase.GetCollection<EventDictionaryModel>(EventDictionaryCollectionName);
     public IClientSessionHandle StartSession() => mongoClient.StartSession();
     public IMongoDatabase Database => mongoDatabase;
     public Task<IClientSessionHandle> StartSessionAsync(CancellationToken cancellationToken = default) => 
         mongoClient.StartSessionAsync(null, cancellationToken);
-
-    //  public IMongoClient MongoClient => mongoClient;
-    // public async Task<IMongoCollection<StatisticsModel>> PrepareStatisticsCollection(
-    //     CancellationToken cancellationToken = default)
-    // {
-    //
-    //     var collection = mongoDatabase.GetCollection<StatisticsModel>(StatisticsCollectionName);
-    //     var documentBuilder = Builders<StatisticsModel>.IndexKeys;
-    //     var idIndex = new CreateIndexModel<StatisticsModel>(
-    //         documentBuilder.Hashed(x => x.Id));
-    //
-    //     await collection.Indexes.CreateOneAsync(idIndex, null, cancellationToken);
-    //     return collection;
-    // }
-    // public async Task<IMongoCollection<EventModel>> PrepareEventCollection(
-    //     CancellationToken cancellationToken = default)
-    // {
-    //     var collection = mongoDatabase.GetCollection<EventModel>(EventCollectionName);
-    //
-    //     var documentBuilder = Builders<EventModel>.IndexKeys;
-    //     var nameIndex = new CreateIndexModel<EventModel>(
-    //         documentBuilder.Ascending(x => x.Name));
-    //
-    //     var statisticsIdIndex = new CreateIndexModel<EventModel>(
-    //         documentBuilder.Hashed(x => x.StatisticsId));
-    //
-    //     await collection.Indexes.CreateManyAsync(new[]
-    //         {
-    //             nameIndex, statisticsIdIndex
-    //         },
-    //         cancellationToken);
-    //     return collection;
-    // }
 }

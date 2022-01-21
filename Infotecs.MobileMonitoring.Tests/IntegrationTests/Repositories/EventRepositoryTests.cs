@@ -25,13 +25,13 @@ public class EventRepositoryTests : IClassFixture<MongoDbFixture>
     {
         // Arrange
         var statId = Guid.NewGuid();
-        var repo = new EventRepository(mongoDbFixture.Context);
+        var repo = new EventRepository(mongoDbFixture.Context, mongoDbFixture.Context.StartSession());
         var events = fixture.Build<EventModel>()
             .With(e => e.StatisticsId, statId)
             .CreateMany()
             .ToArray();
         // Act
-        await repo.CreateRangeAsync(events);
+        await repo.CreateAsync(events);
         // Assert
         var resultEvents = await repo.GetListAsync(statId);
         resultEvents.Should().NotBeNullOrEmpty();

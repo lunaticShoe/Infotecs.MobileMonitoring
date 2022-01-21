@@ -1,3 +1,4 @@
+using System;
 using Infotecs.MobileMonitoring.Contracts;
 using Infotecs.MobileMonitoring.Models;
 using Mapster;
@@ -5,6 +6,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using Infotecs.MobileMonitoring.Data;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Migrator;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace Infotecs.MobileMonitoring.Extensions;

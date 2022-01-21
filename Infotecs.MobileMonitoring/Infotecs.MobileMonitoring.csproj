@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
+<!--        <Nullable>enable</Nullable>-->
+<!--        <ImplicitUsings>enable</ImplicitUsings>-->
         <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>

@@ -1,3 +1,5 @@
+using System;
+
 namespace Infotecs.MobileMonitoring.Extensions;
 
 public static class GuidExtensions

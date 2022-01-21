@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Models;
 using MongoDB.Driver;
 
@@ -11,4 +13,5 @@ public interface IMongoDbContext
    // IClientSessionHandle Session { get; }
     IClientSessionHandle StartSession();
     Task<IClientSessionHandle> StartSessionAsync(CancellationToken cancellationToken = default);
+    IMongoCollection<EventDictionaryModel> GetEventDictionaryCollection();
 }

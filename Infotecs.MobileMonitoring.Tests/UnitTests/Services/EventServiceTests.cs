@@ -49,14 +49,14 @@ public class EventServiceTests
             .ReturnsAsync(statisticsItem);
         eventsRepo
             .Setup(e =>
-                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None))
+                e.CreateAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None))
             .Callback((ICollection<EventModel> inEvents, CancellationToken _) =>
             {
                 resultList = inEvents;
             });
        
         // Act
-        await eventService.CreateRangeAsync(statisticsItem.Id, events);
+        await eventService.CreateAsync(statisticsItem.Id, events);
         
         // Assert
         resultList.Should().NotBeNullOrEmpty();
@@ -114,15 +114,15 @@ public class EventServiceTests
             .ReturnsAsync(statisticsItem);
         eventsRepo
             .Setup(e =>
-                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None));
+                e.CreateAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None));
        
         // Act
-        Func<Task> act = () => eventService.CreateRangeAsync(statisticsItem.Id, events);
+        Func<Task> act = () => eventService.CreateAsync(statisticsItem.Id, events);
         
         // Assert
         await act.Should().ThrowAsync<ArgumentException>("Invalid data was written");
         eventsRepo.Verify(e => 
-            e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None), 
+            e.CreateAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None), 
             () => Times.Never());   
     }
     

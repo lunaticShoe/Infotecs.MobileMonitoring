@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Data;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
@@ -29,7 +33,7 @@ public class StatisticsRepository : IStatisticsRepository
 
     public Task CreateAsync(StatisticsModel statisticsModel, CancellationToken token = default)
     {
-        return collection.InsertOneAsync(statisticsModel, null,token);
+        return collection.InsertOneAsync(session, statisticsModel, null,token);
     }
     public Task UpdateAsync(StatisticsModel newModel, CancellationToken token = default)
     {

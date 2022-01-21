@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Exceptions;
 using Infotecs.MobileMonitoring.Extensions;
 using Infotecs.MobileMonitoring.Interfaces;
@@ -8,8 +13,6 @@ namespace Infotecs.MobileMonitoring.Services;
 
 public class EventService : IEventService
 {
-    // private readonly IEventRepository eventRepository;
-    // private readonly IStatisticsRepository statisticsRepository;
     private readonly IUnitOfWork unitOfWork;
     private readonly ISessionContainerFactory sessionContainerFactory;
     private readonly ILogger logger;
@@ -23,38 +26,30 @@ public class EventService : IEventService
         this.logger = logger;
     }
 
-    public async Task CreateAsync(EventModel eventModel, CancellationToken cancellationToken = default)
+    // public async Task CreateAsync(EventModel eventModel, CancellationToken cancellationToken = default)
+    // {
+    //     if (eventModel.StatisticsId == default)
+    //         throw new Exception($"Invalid statistics Id");
+    //
+    //     if (eventModel.Name.IsNullOrEmpty())
+    //         throw new Exception("Event name is null or empty");
+    //     
+    //     var statisticsModel = await unitOfWork.StatisticsRepository.GetAsync(eventModel.StatisticsId, cancellationToken);
+    //
+    //     if (statisticsModel is null)
+    //         throw new Exception($"Element with id = {eventModel.StatisticsId} does not exists");
+    //     
+    //     if (eventModel.Name.Length > 50)
+    //     {
+    //         eventModel.Name = eventModel.Name[..50];
+    //     }
+    //     
+    //     await unitOfWork.EventRepository.CreateAsync(eventModel, cancellationToken);
+    //     logger.Debug("Element added: {@Event}",eventModel);
+    // }
+
+    public async Task CreateAsync(Guid statisticsId, ICollection<EventModel> eventModels, CancellationToken cancellationToken = default)
     {
-        if (eventModel.StatisticsId == default)
-            throw new Exception($"Invalid statistics Id");
-
-        if (eventModel.Name.IsNullOrEmpty())
-            throw new Exception("Event name is null or empty");
-        
-        var statisticsModel = await unitOfWork.StatisticsRepository.GetAsync(eventModel.StatisticsId, cancellationToken);
-
-        if (statisticsModel is null)
-            throw new Exception($"Element with id = {eventModel.StatisticsId} does not exists");
-        
-        if (eventModel.Name.Length > 50)
-        {
-            eventModel.Name = eventModel.Name[..50];
-        }
-        
-        await unitOfWork.EventRepository.CreateAsync(eventModel, cancellationToken);
-        logger.Debug("Element added: {@Event}",eventModel);
-    }
-
-    public async Task CreateRangeAsync(Guid statisticsId, ICollection<EventModel> eventModels, CancellationToken cancellationToken = default)
-    {
-        // if (statisticsId == default)
-        //     throw new Exception($"Invalid statistics Id");
-        //
-        // var statisticsModel = await unitOfWork.StatisticsRepository.GetAsync(statisticsId, cancellationToken);
-        //
-        // if (statisticsModel is null)
-        //     throw new ElementDoesNotExistsException(statisticsId);
-
         var hasBadEvents = eventModels
             .Any(e => e.Name.IsNullOrEmpty() || e.Name.Length > 50);
         
@@ -65,7 +60,7 @@ public class EventService : IEventService
         {
             eventModel.StatisticsId = statisticsId;
         }
-        await unitOfWork.EventRepository.CreateRangeAsync(eventModels, cancellationToken);
+        await unitOfWork.EventRepository.CreateAsync(eventModels, cancellationToken);
         logger.Debug(
             "Elements for statistics id = {StatisticsId} added: {@Events}", 
             statisticsId, eventModels);
@@ -74,5 +69,14 @@ public class EventService : IEventService
     public Task<ICollection<EventModel>> GetListAsync(Guid statisticsId, CancellationToken cancellationToken)
     {
         return unitOfWork.EventRepository.GetListAsync(statisticsId, cancellationToken);
+    }
+
+    public async Task DeleteAsync(Guid statisticsId, CancellationToken cancellationToken)
+    {
+        using (sessionContainerFactory.Create(unitOfWork))
+        {
+            await unitOfWork.EventRepository.DeleteAsync(statisticsId, cancellationToken);
+            await unitOfWork.CommitAsync(cancellationToken);
+        }
     }
 }

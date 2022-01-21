@@ -11,13 +11,24 @@ services:
       - ACCEPT_EULA=Y
   mongodb:
     container_name: monitoring-mongo
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo testtoken > /data/replica.key
+        chmod 400 /data/replica.key
+        chown 999:999 /data/replica.key
+        exec docker-entrypoint.sh $$@    
+    command: "mongod --bind_ip_all --replSet rs1 --keyFile /data/replica.key"
     restart: always
     image: mongo:latest
     environment:
       - "MONGO_DATA_DIR=/data/db"        
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=4321
-#    volumes:
+      - MONGO_INITDB_DATABASE=monitoring
+    #    volumes:
+#      - ./mongo.key:/etc/mongo-replication.key
 #      - "./mongo:/data/db"
 #      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
@@ -41,4 +52,4 @@ services:
         - DOCKER_IN_DOCKER=start
         - SERVER_URL=http://teamcity-server:8111
         - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
-  
+#  

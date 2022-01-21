@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Builder;
+
 namespace Infotecs.MobileMonitoring.Extensions;
 
 public static class ApplicationBuilderExtensions

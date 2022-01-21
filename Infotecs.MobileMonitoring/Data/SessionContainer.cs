@@ -1,9 +1,12 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Interfaces;
 using MongoDB.Driver;
 
 namespace Infotecs.MobileMonitoring.Data;
 
-public class SessionContainer : ISessionContainer
+public sealed class SessionContainer : ISessionContainer
 {
     private readonly IUnitOfWork unitOfWork;
     private IClientSessionHandle session;
@@ -13,14 +16,10 @@ public class SessionContainer : ISessionContainer
     {
         this.unitOfWork = unitOfWork;
         session = unitOfWork.Context.StartSession();
+        session.StartTransaction();
         unitOfWork.CaptureSession(session);
     }
 
-    ~SessionContainer()
-    {
-        Dispose(false);
-    }
-    
     public void Dispose()
     {
         Dispose(true);
@@ -37,11 +36,5 @@ public class SessionContainer : ISessionContainer
         }
         disposed = true;
         
-    }
-    
-
-    public Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        return session.CommitTransactionAsync(cancellationToken);
     }
 }

@@ -18,5 +18,11 @@ public class MongoDbMapper
             cm.MapIdMember(x => x.Id);
             cm.AutoMap();
         });
+
+        BsonClassMap.RegisterClassMap<EventDictionaryModel>(cm =>
+        {
+            cm.MapIdMember(x => x.Id);
+            cm.AutoMap();
+        });
     }
 }

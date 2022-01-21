@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Repositories;
 using MongoDB.Driver;
@@ -7,9 +10,8 @@ namespace Infotecs.MobileMonitoring.Data;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly IMongoDbContext mongoDbContext;
-    private IEventRepository? eventRepository;
-    private IStatisticsRepository? statisticsRepository;
     private IClientSessionHandle? session;
+    private IClientSessionHandle? containerSession;
     private bool disposed;
     
     public UnitOfWork(IMongoDbContext mongoDbContext)
@@ -17,63 +19,38 @@ public class UnitOfWork : IUnitOfWork
         this.mongoDbContext = mongoDbContext;
         // session = mongoDbContext.Session;
         session = mongoDbContext.StartSession();
-        eventRepository = new EventRepository(mongoDbContext, session);
-        statisticsRepository = new StatisticsRepository(mongoDbContext, session);
     }
 
-    // ~UnitOfWork()
-    // {
-    //     Dispose(false);
-    // }
-
     public IEventRepository EventRepository =>
-        eventRepository; //??= new EventRepository(mongoDbContext);
-
-    public IStatisticsRepository StatisticsRepository =>
-        statisticsRepository; //??= new StatisticsRepository(mongoDbContext);
+        new EventRepository(mongoDbContext, GetSession());
+    public IStatisticsRepository StatisticsRepository => 
+        new StatisticsRepository(mongoDbContext, GetSession());
+    public IEventDictionaryRepository EventDictionaryRepository => 
+        new EventDictionaryRepository(mongoDbContext, GetSession());
 
     public IMongoDbContext Context => mongoDbContext;
-
-    private object thisLock = new();
     
-    
-    
-    public void CaptureSession(IClientSessionHandle? session)
+    public void CaptureSession(IClientSessionHandle session)
     {
-        lock (thisLock)
-        {
-            eventRepository = new EventRepository(mongoDbContext, session);
-            statisticsRepository = new StatisticsRepository(mongoDbContext, session);
-        }
+        this.containerSession = session;
     }
 
     public void ReleaseSession()
     {
-        CaptureSession(session);
+        CaptureSession(null);
     }
-    //
-    // public async Task ExecuteTransactionAsync(Func<IUnitOfWork, Task> transaction, CancellationToken cancellationToken = default)
-    // {
-    //     try
-    //     {
-    //         using (session = await mongoDbContext.StartSessionAsync(cancellationToken))
-    //         {
-    //             RecreateRepositories(session);
-    //             await transaction(this);
-    //         }
-    //     }
-    //     finally
-    //     {
-    //         RecreateRepositories(null);
-    //     }
-    // }
-    //
-    // public Task SaveAsync()
-    // {
-    //     if (session is null) return Task.CompletedTask;
-    //     return session.CommitTransactionAsync();
-    // }
-    //
+
+    private IClientSessionHandle GetSession()
+    {
+        return containerSession ?? session;
+    }
+  
+    public Task CommitAsync(CancellationToken cancellationToken = default)
+    { 
+        //return Task.CompletedTask;
+        return GetSession().CommitTransactionAsync(cancellationToken);
+    }
+    
     public void Dispose()
     {
         Dispose(true);

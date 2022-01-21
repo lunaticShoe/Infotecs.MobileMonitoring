@@ -1,3 +1,5 @@
+using System;
+
 namespace Infotecs.MobileMonitoring.Exceptions;
 
 public class ElementAlreadyExistsException : Exception

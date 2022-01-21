@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Infotecs.MobileMonitoring.Models;
 
 namespace Infotecs.MobileMonitoring.Contracts;

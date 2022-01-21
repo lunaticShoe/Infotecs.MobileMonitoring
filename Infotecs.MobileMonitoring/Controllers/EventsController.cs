@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Infotecs.MobileMonitoring.Contracts;
 using Infotecs.MobileMonitoring.Interfaces;
 using Infotecs.MobileMonitoring.Models;
@@ -22,6 +26,12 @@ namespace Infotecs.MobileMonitoring.Controllers
         {
             return (await eventService.GetListAsync(statisticsId, cancellationToken))
                 .Adapt<EventContract[]>();
+        }
+
+        [HttpDelete("{statisticsId:guid}")]
+        public Task DeleteListAsync(Guid statisticsId, CancellationToken cancellationToken = default)
+        {
+            return eventService.DeleteAsync(statisticsId, cancellationToken);
         }
         //
         // [HttpPut("create")]

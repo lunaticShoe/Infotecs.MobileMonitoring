@@ -47,7 +47,7 @@ public class StatisticsServiceTests
                 s.CreateAsync(It.IsAny<StatisticsModel>(), CancellationToken.None))
             .Callback((StatisticsModel a, CancellationToken _) => { resultModel = a; });
         eventsRepo.Setup(e =>
-                e.CreateRangeAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None))
+                e.CreateAsync(It.IsAny<ICollection<EventModel>>(), CancellationToken.None))
             .Callback((ICollection<EventModel> events, CancellationToken _) => { resultEvents = events; });
             
         // Act

@@ -1,3 +1,4 @@
+using System;
 using Infotecs.MobileMonitoring.Models;
 
 namespace Infotecs.MobileMonitoring.Dto;
